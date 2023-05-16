@@ -16,7 +16,7 @@ public class Category {
 private int id;
 @Column(name = "Name")
 private String name;
-    @OneToMany(mappedBy = "Category",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Product> productSet=new HashSet<>();
 
 }

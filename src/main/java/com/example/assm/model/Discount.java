@@ -23,6 +23,6 @@ public class Discount {
     private Date startdate;
     @Column(name = "EndDate")
     private Date enddate;
-    @OneToMany(mappedBy = "Discounts",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "discount",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<ProductDiscount> productDiscountSet=new HashSet<>();
 }

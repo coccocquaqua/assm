@@ -22,8 +22,8 @@ public class Order {
     @Column(name = "UserID")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToMany(mappedBy = "Orders",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<ProducOrder> producOrderSet=new HashSet<>();
-    @OneToMany(mappedBy = "Orders",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<OrderDetail> OrderDetails=new HashSet<>();
 }

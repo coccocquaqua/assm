@@ -31,7 +31,7 @@ public class User {
     private Date createdtime;
     @Column(name = "Updated_time")
     private Date updateedtime;
-    @OneToMany(mappedBy = "Users",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Order> orderSet=new HashSet<>();
 
 }
