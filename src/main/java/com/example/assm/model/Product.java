@@ -20,7 +20,7 @@ public class Product {
     private int price;
     @Column(name = "Image")
     private int image;
-    @Column(name = "CategoryID")
+    @JoinColumn(name = "CategoryID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)

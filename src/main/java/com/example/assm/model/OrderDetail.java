@@ -13,10 +13,10 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private int id;
-    @Column(name = "Order_id")
+    @JoinColumn(name = "Order_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
-    @Column(name = "Product_id")
+    @JoinColumn(name = "Product_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
     @Column(name = "Quantity")

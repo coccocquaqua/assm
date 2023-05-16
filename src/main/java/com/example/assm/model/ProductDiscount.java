@@ -11,10 +11,10 @@ public class ProductDiscount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private int id;
-    @Column(name = "ProductId")
+    @JoinColumn(name = "ProductId")
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
-    @Column(name = "DiscountId")
+    @JoinColumn(name = "DiscountId")
     @ManyToOne(fetch = FetchType.LAZY)
     private Discount discount;
 }

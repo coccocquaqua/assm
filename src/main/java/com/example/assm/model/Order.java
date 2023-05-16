@@ -19,7 +19,7 @@ public class Order {
     private Date orderdate;
     @Column(name = "TotalAmount")
     private float totalamount;
-    @Column(name = "UserID")
+    @JoinColumn(name = "UserID")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
