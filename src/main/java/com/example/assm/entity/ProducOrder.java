@@ -1,4 +1,4 @@
-package com.example.assm.model;
+package com.example.assm.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

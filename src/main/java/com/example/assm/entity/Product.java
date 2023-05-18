@@ -1,4 +1,4 @@
-package com.example.assm.model;
+package com.example.assm.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,11 +15,11 @@ public class Product {
     @Column(name = "Id")
     private int id;
     @Column(name = "Names")
-    private int name;
+    private String name;
     @Column(name = "Price")
-    private int price;
+    private Float price;
     @Column(name = "Image")
-    private int image;
+    private String image;
     @JoinColumn(name = "CategoryID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
