@@ -44,7 +44,6 @@ public ProductDetailService(ProductDetailRepository productRepository,
                     }
           productDetailList.add(productDetail);
         }
-
         return productDetailList;
     }
 

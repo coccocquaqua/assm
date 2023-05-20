@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/product")
 public class ProductDetailController {
@@ -16,11 +18,12 @@ public class ProductDetailController {
 public ProductDetailController(ProductDetailService _productDetailService) {
     this.productDetailService = _productDetailService;
 }
-    @GetMapping("/detail")
+    @GetMapping("/show")
     public String getAllProductDetails(Model model) {
-        ProductDetail productDetail=new ProductDetail();
-        model.addAttribute("product", productDetailService.getAllProductDetail());
-        return "views/shop";
+        List<ProductDetail> _lstProd = productDetailService.getAllProductDetail();
+        model.addAttribute("product", _lstProd);
+        System.out.println("List size => " +_lstProd.size());
+        return "shop";
     }
 /*    public List<ProductDetail> GetAll(){
         List<ProductDetail>productDetails=productService.getAllProduct();
