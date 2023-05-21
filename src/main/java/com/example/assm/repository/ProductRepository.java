@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Integer> {
-    @Query("SELECT new com.example.assm.model.ProductDetail(p.name, p.price, p.image, d.percentage) " +
-            "FROM Product p " +
-            "JOIN p.productDiscounts pd " +
-            "JOIN pd.discount d")
-    List<ProductDetail> getProductDetails();
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+
 }
+
+

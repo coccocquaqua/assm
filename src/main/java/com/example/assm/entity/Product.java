@@ -24,8 +24,6 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)
-    private Set<ProducOrder> producOrder=new HashSet<>();
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<ProductDiscount> productDiscounts=new HashSet<>();
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<OrderDetail> productDetails=new HashSet<>();
