@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginForm {
-	private String userId;
+	private int userId;
 	private String password;
 	private boolean remember;
+
 }

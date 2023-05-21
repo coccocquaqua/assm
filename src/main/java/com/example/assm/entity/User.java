@@ -26,7 +26,7 @@ public class User {
     @Column(name = "Address")
     private String address;
     @Column(name = "Roles")
-    private String role;
+    private Boolean role;
     @Column(name = "Created_time")
     private Date createdtime;
     @Column(name = "Updated_time")

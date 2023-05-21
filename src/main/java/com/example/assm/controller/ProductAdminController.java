@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/productadmin")
 public class ProductAdminController {
@@ -17,8 +19,8 @@ ProductServiceImpl productService;
     @GetMapping("/")
     public String showlistProduct(Model model) {
         //tạo thuộc tính model để liên kết dữ liệu form
-        Product product=new Product();
-        model.addAttribute("chucvu", productService.getAll());
+        List<Product> productList=productService.getAll();
+        model.addAttribute("chucvu", productList);
 
         return "Index";
     }
