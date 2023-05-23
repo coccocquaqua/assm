@@ -11,13 +11,13 @@ import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
-public interface ProductUserRepository extends JpaRepository<Product,Integer>{
+public interface ProductUserRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT new com.example.assm.model.ProductDetail(p.name, p.price, p.image, d.percentage) " +
             "FROM Product p " +
             "JOIN p.productDiscounts pd " +
             "JOIN pd.discount d ")
-            //"order by (p.price * (1-d.percentage)) DESC")
+        //"order by (p.price * (1-d.percentage)) DESC")
     List<ProductDetail> getProductDetails();
 
     @Query("SELECT new com.example.assm.model.ProductDetail(p.name, p.price, p.image, d.percentage) " +

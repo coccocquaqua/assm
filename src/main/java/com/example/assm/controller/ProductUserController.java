@@ -1,5 +1,6 @@
 package com.example.assm.controller;
 
+import com.example.assm.dto.ProductDTO;
 import com.example.assm.model.ProductDetail;
 import com.example.assm.model.ProductDetailPage;
 import com.example.assm.service.user.ProductDetailService;
@@ -11,10 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/productuser")
+@RequestMapping("/product")
 public class ProductUserController {
 
 
@@ -31,7 +33,12 @@ public class ProductUserController {
     @GetMapping("/show")
     public String getAllProduct(Model model) {
         List<ProductDetail> productDetailList = productDetailService.getAllProduct();
-        model.addAttribute("product", productDetailList);
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for (ProductDetail p : productDetailList) {
+            ProductDTO productDTO = new ProductDTO(p);
+            productDTOS.add(productDTO);
+        }
+        model.addAttribute("product", productDTOS);
         return "shop";
     }
 //get one product (xem chi tiết sản phẩm)
@@ -43,7 +50,7 @@ public class ProductUserController {
             return "productNotFound";
         }
         model.addAttribute("productId", productDetail);
-        return "order";
+        return "";
     }
 
     @GetMapping("/page")
@@ -57,13 +64,13 @@ public class ProductUserController {
     }
 
     @GetMapping("/Category/{name}")
-    public String getProductByCategoryName(@PathVariable String categoryName, Model model) {
-
+    public String getProductByCategoryName(@PathVariable("name") String categoryName, Model model) {
+        System.out.println(categoryName);
         List<ProductDetail> productDetailList = productDetailService.getProductByCategoryName(categoryName);
        if(productDetailList.isEmpty()){
            return "noContentView";
        }
         model.addAttribute("product", productDetailList);
-        return "shop";
+        return "forward:/show";
     }
 }

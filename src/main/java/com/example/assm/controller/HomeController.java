@@ -30,10 +30,7 @@ public class HomeController {
     public String showCart(){
         return "cart";
     }
-    @GetMapping("/admin")
-    public String showAdmin(){
-        return "admin";
-    }
+
     @GetMapping("/list_prod")
     public String showlistProd(){
         return "list_product";

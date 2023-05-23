@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginForm {
+public class UserDTO {
 	private int userId;
+	private String username;
 	private String password;
 	private boolean remember;
 

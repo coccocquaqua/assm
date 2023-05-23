@@ -17,7 +17,6 @@ import java.util.List;
 public class ProductDetailService implements IProductDetailService {
     private final ProductUserRepository productUserRepository;
     private final ProductRepository productRepository;
-
     @Autowired
     public ProductDetailService(ProductUserRepository productRepository,
                                 ProductRepository _productRepository) {
@@ -32,8 +31,6 @@ public class ProductDetailService implements IProductDetailService {
         List<ProductDetail> nonDiscountedProducts = new ArrayList<>();
         for (ProductDetail productDetail : productDetails) {
             if(productDetail.getPercentage()>0){
-                float calculatedPrice = productDetail.getPrice()-(productDetail.getPrice() *( productDetail.getPercentage()/100));
-                productDetail.setPrice(calculatedPrice);
                 discountedProducts.add(productDetail);
             }
             nonDiscountedProducts.add(productDetail);

@@ -133,33 +133,12 @@ https://templatemo.com/tm-559-zay-shop
                 <ul class="list-unstyled templatemo-accordion">
                     <li class="pb-3">
                         <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Gender
-                            <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
-                        </a>
-                        <ul class="collapse show list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Men</a></li>
-                            <li><a class="text-decoration-none" href="#">Women</a></li>
-                        </ul>
-                    </li>
-                    <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Sale
-                            <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                        </a>
-                        <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Sport</a></li>
-                            <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        </ul>
-                    </li>
-                    <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
                             Product
                             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul id="collapseThree" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Bag</a></li>
-                            <li><a class="text-decoration-none" href="#">Sweather</a></li>
-                            <li><a class="text-decoration-none" href="#">Sunglass</a></li>
+                            <li><a class="text-decoration-none" th:href="@{/Category/Lightning}">Lightning</a></li>
+                            <li><a class="text-decoration-none" th:href="@{/Category/Type-c}">Type-c</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -197,15 +176,20 @@ https://templatemo.com/tm-559-zay-shop
                                 <img class="card-img rounded-0 img-fluid" th:src="@{/assets/img/__${c.image}__}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white mt-2" href="order"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" th:href="@{/ShowOne/__${c.id}__}"><i class="far fa-eye"></i></a></li>
                                         <li><a class="btn btn-success text-white mt-2" href="cart"><i class="fas fa-cart-plus"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <a href="order" class="h3 text-decoration-none" th:text="${c.name}"></a>
+                            <div class="card-body text-center">
+                                <a href="order" class="h3 text-decoration-none fw-bold text-success" th:text="${c.name}"></a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                    <li th:text="${c.price}"></li>
+
+                                    <li class="text-danger text-decoration-line-through" th:text="'$'+${c.price}">
+                                    </li>
+
+                                    <li th:text="'$'+${c.discountedPrice}"> </li>
+
                                     <li class="pt-2">
                                         <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
                                         <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>

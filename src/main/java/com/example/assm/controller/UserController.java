@@ -1,16 +1,17 @@
 package com.example.assm.controller;
 
-import com.example.assm.dto.LoginForm;
+import com.example.assm.dto.UserDTO;
 import com.example.assm.entity.User;
 import com.example.assm.service.user.account.IAccountService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.catalina.manager.util.SessionUtils;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -20,26 +21,27 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
     private final IAccountService accountService;
-
+    @Autowired
+    HttpSession session;
     @Autowired
     public UserController(IAccountService accountService) {
         this.accountService = accountService;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
         try {
-            LoginForm loginForm = new LoginForm();
+            UserDTO loginForm = new UserDTO();
             Optional<User> user = accountService.getUserById(loginForm.getUserId());
 
             if (user.isPresent() && user.get().getPassword().equals(loginForm.getPassword())) {
-                SessionUtils.add(request, "username", user.get().getName());
+                session.setAttribute("user", user);
 
-                if (loginForm.isRemember()) {
-                    CookiesUtils.add("username", loginForm.getUserId(), 24, response);
-                } else {
-                    CookiesUtils.add("username", loginForm.getUserId(), 0, response);
-                }
+//                if (loginForm.isRemember()) {
+//                    Cookie.add("username", loginForm.getUserId(), 24, response);
+//                } else {
+//                    CookiesUtils.add("username", loginForm.getUserId(), 0, response);
+//                }
 
                 request.setAttribute("isLogin", true);
 

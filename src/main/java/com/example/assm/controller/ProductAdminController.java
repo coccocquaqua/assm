@@ -11,25 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/productadmin")
+@RequestMapping("/admin")
 public class ProductAdminController {
 @Autowired
 ProductServiceImpl productService;
 
-    @GetMapping("/")
+    @GetMapping("/index")
+    public String index(Model model) {
+        return "admin";
+    }
+
+    @GetMapping("/list_prod")
     public String showlistProduct(Model model) {
         //tạo thuộc tính model để liên kết dữ liệu form
         List<Product> productList=productService.getAll();
-        model.addAttribute("chucvu", productList);
+        System.out.println(productList.size());
+        model.addAttribute("allProd", productList);
 
-        return "Index";
+        return "list_product";
     }
     //code cho user
-    @GetMapping("/addnew")
+    @GetMapping("/man_prod")
     public String addNew(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
-        return "newProduct";
+        return "edit_prod";
     }
     @PostMapping("/save")
     public String saveProduct(@ModelAttribute("chucvu") Product product) {
