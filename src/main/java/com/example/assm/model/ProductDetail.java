@@ -15,6 +15,14 @@ public class ProductDetail {
     public ProductDetail() {
     }
 
+    public ProductDetail(int id, String name, float price, String image, float percentage) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.image = image;
+        Percentage = percentage;
+    }
+
     public ProductDetail(String name, float price, String image, float percentage) {
         this.name = name;
         this.price = price;
