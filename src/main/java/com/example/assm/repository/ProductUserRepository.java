@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProductUserRepository extends JpaRepository<Product, Integer> {
 
-    @Query("SELECT new com.example.assm.model.ProductDetail(p.name, p.price, p.image, COALESCE(d.percentage, 0)) " +
+    @Query("SELECT new com.example.assm.model.ProductDetail(p.id, p.name, p.price, p.image, COALESCE(d.percentage, 0)) " +
             "FROM Product p " +
             "LEFT JOIN p.productDiscounts pd " +
             "LEFT JOIN pd.discount d ")

@@ -18,6 +18,8 @@ public class Product {
     private String name;
     @Column(name = "Price")
     private Float price;
+    @Column(name = "Quantity")
+    private int quantity;
     @Column(name = "Image")
     private String image;
     @JoinColumn(name = "CategoryID")

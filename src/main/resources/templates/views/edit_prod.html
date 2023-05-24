@@ -313,15 +313,20 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <form class="card-body" th:object="${prod}">
                                 <div class="form-group">
-                                    <label for="title">Name</label>
-                                    <input type="text" id="title"
+                                    <label for="id">Id</label>
+                                    <input type="number" th:field="*{id}" id="id"
+                                           class="form-control disabled">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" th:field="*{name}" id="name"
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Price</label>
-                                    <input type="text" id="videoid"
+                                    <input type="number" th:field="*{price}" id="price"
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
@@ -329,25 +334,24 @@
                                         <div class="col-9">
                                             <div class="row">
                                                 <div class="col-12 form-group">
-                                                    <label for="description">Quantity</label>
-                                                    <textarea id="description" class="form-control"
-                                                              rows="4"></textarea>
+                                                    <label for="quantity">Quantity</label>
+                                                    <input id="quantity" th:field="*{quantity}" class="form-control">
+                                                </div>
+
+                                                <div class="col-12 form-group">
+                                                    <label>Type</label>
+                                                    <select th:field="*{category}" id="category" class="custom-select form-control-border border-width-2">
+                                                        <option selected value="">Open this select menu</option>
+                                                        <option th:each="c:${categories}" th:value="${c.key}">[(${c.value})]</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col-12 form-group">
-                                                    <label for="poster">CategoryId</label>
-                                                    <input type="text" id="poster"
-
-                                                           class="form-control">
-                                                    <input type="hidden" id="isEdit"
-
-                                                           class="form-control"/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="exampleInputFile">Image</label>
+                                                    <label for="exampleInputFile">File input</label>
                                                     <div class="input-group">
                                                         <div class="custom-file">
-                                                            <input type="file" class="custom-file-input"
-                                                                   id="exampleInputFile">
+                                                            <input type="file" th:field="*{image}"
+                                                                   class="custom-file-input"
+                                                                   id="image">
                                                             <label class="custom-file-label" for="exampleInputFile">Choose
                                                                 file</label>
                                                         </div>
@@ -367,7 +371,8 @@
                                     </div>
 
                                 </div>
-                            </div>
+
+                            </form>
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
@@ -376,9 +381,9 @@
                         <button type="button" id="resetBtn" class="btn bg-gradient-info btn-md"
                                 style="margin-right: 15px;">Reset
                         </button>
-                        <button type="button" id="submitBtn" class="btn bg-gradient-success btn-md">Submit</button>
+                        <button type="button" id="submitBtn" class="btn bg-gradient-success btn-md">Submit
+                        </button>
                     </div>
-                    <center><h5 class="text-center text-danger" id="message"></h5></center>
                 </div>
             </div>
         </section>
@@ -422,7 +427,72 @@
 <script src="/plugins/jquery-mapael/maps/usa_states.min.js"></script>
 <!-- ChartJS -->
 <script src="/plugins/chart.js/Chart.min.js"></script>
+<script src="/plugins/jquery/jquery.min.js"></script>
+
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+<script src="/dist/js/adminlte.min.js?v=3.2.0"></script>
+
+<script src="/dist/js/demo.js"></script>
+
 <script>
+    var idOrigin, nameOrigin, priceOrigin, quantityOrigin, categoryOrigin, imageOrigin;
+    $(document).ready(function () {
+        idOrigin = $('#id').val();
+        nameOrigin = $('#name').val();
+        priceOrigin = $('#price').val();
+        quantityOrigin = $('#quantity').val();
+        categoryOrigin = $('#category').val();
+        imageOrigin = $('#image').val();
+
+    });
+    $('#resetBtn').click(function () {
+        $('#id').val(idOrigin);
+        $('#price').val(priceOrigin);
+        $('#quantity').val(quantityOrigin);
+        $('#category').val(categoryOrigin);
+        $('#image').val(imageOrigin);
+
+        if (imageOrigin.length > 0) {
+            $('#imgPreview').attr("src", imageOrigin);
+        }
+    });
+    $('#submitBtn').click(function () {
+        $('#message').text('');
+        var url;
+        // var isEdit = $('#isEdit').val();
+        // if (isEdit == 'true') {
+        //     url = "/Assignment_java4_thinhlhph19459/admin/video?action=edit&id=" + vidOrigin;
+        // } else {
+        //     url = "/Assignment_java4_thinhlhph19459/admin/video?action=add";
+        // }
+
+        var formData = {
+            'idOrigin':  idOrigin,
+            'name':  $('#name').val(),
+            'price': $('#price').val(),
+            'quantity': $('#quantity').val(),
+            'category': $('#category').val(),
+            'image': $('#image').val()
+        };
+        console.log(nameOrigin)
+        $.ajax({
+            url: "/admin/saveProd",
+            type: 'POST',
+            data: formData
+        }).then(function (data) {
+            alert("Successful")
+            window.location.href = "/admin/list_prod";
+        }).fail(function (error) {
+            alert("fail")
+        });
+    });
+    $('#image').change(function () {
+        var newSrc = $('#image').val();
+        $('#imgPreview').attr('src', newSrc);
+    })
     $(function () {
         bsCustomFileInput.init();
     });
@@ -431,5 +501,6 @@
 <script src="/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/dist/js/pages/dashboard2.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>

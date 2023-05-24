@@ -234,7 +234,7 @@ https://templatemo.com/tm-559-zay-shop
                     <div class="card">
                         <div class="card-body">
                             <h1 class="h2"th:if="${prod != null}" th:text="${prod.name}"></h1>
-                            <p class="h3 py-2"th:text="${prod != null ? prod.price : ''}"></p>
+                            <p class="h3 py-2"th:text="${prod != null ? prod.price : ''}+'$'"></p>
                             <p class="py-2">
                                 <i class="fa fa-star text-warning"></i>
                                 <i class="fa fa-star text-warning"></i>

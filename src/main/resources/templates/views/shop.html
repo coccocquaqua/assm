@@ -176,7 +176,7 @@ https://templatemo.com/tm-559-zay-shop
                                 <img class="card-img rounded-0 img-fluid" th:src="@{/assets/img/__${c.image}__}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white mt-2" th:href="@{/product/ShowOne/1}"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" th:href="@{/product/ShowOne/__${c.id}__}"><i class="far fa-eye"></i></a></li>
                                         <li><a class="btn btn-success text-white mt-2" href="cart"><i class="fas fa-cart-plus"></i></a></li>
                                     </ul>
                                 </div>
@@ -185,10 +185,10 @@ https://templatemo.com/tm-559-zay-shop
                                 <a href="order" class="h3 text-decoration-none fw-bold text-success" th:text="${c.name}"></a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
 
-                                    <li class="text-danger text-decoration-line-through" th:text="'$'+${c.price}">
+                                    <li class="text-info" th:text="'$'+${c.price}">
                                     </li>
 
-                                    <li th:text="'$'+${c.discountedPrice}"> </li>
+<!--                                    <li class=" text-decoration-line-through" th:text="'$'+${c.discountedPrice}"> </li>-->
 
                                     <li class="pt-2">
                                         <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>

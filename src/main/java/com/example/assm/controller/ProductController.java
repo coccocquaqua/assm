@@ -4,9 +4,7 @@ import com.example.assm.dto.ProductDTO;
 import com.example.assm.model.ProductDetail;
 import com.example.assm.model.ProductDetailPage;
 import com.example.assm.service.user.IProductDetailService;
-import com.example.assm.service.user.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +15,14 @@ import java.util.List;
 //@RestController
 @Controller
 @RequestMapping("/product")
-public class ProductUserController {
+public class ProductController {
 
 
 
 
     IProductDetailService productDetailService;
     @Autowired
-    public ProductUserController(IProductDetailService _productDetailService) {
+    public ProductController(IProductDetailService _productDetailService) {
         this.productDetailService = _productDetailService;
     }
 
@@ -45,7 +43,6 @@ public class ProductUserController {
     @GetMapping("/ShowOne/{IdProduct}")
     public String getOneProductDetail(@PathVariable(value = "IdProduct") int idProduct, Model model) {
         ProductDetail productDetail = productDetailService.GetProductById(idProduct);
-        System.out.println(productDetail.getName());
         if (productDetail == null) {
             return "shop";
         }
