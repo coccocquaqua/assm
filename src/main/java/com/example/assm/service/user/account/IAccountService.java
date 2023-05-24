@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface IAccountService {
     List<User> getAllUser();
     Optional<User> getUserById(int id);
+    void saveAccount(User user);
 }

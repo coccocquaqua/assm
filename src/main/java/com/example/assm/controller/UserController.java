@@ -35,7 +35,7 @@ public class UserController {
         try {
             Optional<User> user = accountService.getUserById(userDTO.getUserId());
 
-            if (user.isPresent() && user.get().getPassWord().equals(userDTO.getPassword())) {
+            if (user.isPresent() && user.get().getPassword().equals(userDTO.getPassword())) {
                 session.setAttribute("user", user);
 
                 Cookie usernameCookie;
