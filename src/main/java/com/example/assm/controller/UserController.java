@@ -34,6 +34,8 @@ public class UserController {
     public String login(HttpServletResponse response, Model model, @Validated @ModelAttribute(name = "user") UserDTO userDTO) {
         try {
             Optional<User> userOptional = accountService.findByName(userDTO.getUsername());
+            System.out.println(userOptional.get().getPassword());
+            System.out.println(userOptional.get().getName());
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 if (user.getPassword().equals(userDTO.getPassword())) {
