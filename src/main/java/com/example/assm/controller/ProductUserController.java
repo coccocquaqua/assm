@@ -20,7 +20,6 @@ import java.util.List;
 public class ProductUserController {
 
 
-    // code cho admin
 
 
     IProductDetailService productDetailService;
