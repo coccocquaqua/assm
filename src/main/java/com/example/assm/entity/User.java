@@ -23,7 +23,7 @@ public class User {
     private String phone;
     @Column(name = "Email")
     private String email;
-    @Column(name = "Address")
+    @Column(name = "Addresss")
     private String address;
     @Column(name = "Roles")
     private Boolean role;

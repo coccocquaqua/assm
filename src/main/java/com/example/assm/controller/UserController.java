@@ -31,9 +31,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response, Model model,@ModelAttribute UserDTO userDTO ) {
+    public String login( HttpServletResponse response,Model model,@Validated @ModelAttribute(name = "user") UserDTO userDTO ) {
         try {
-            Optional<User> user = accountService.getUserById(userDTO.getUserId());
+            Optional<User> user = accountService.findByName(userDTO.getUsername());
 
             if (user.isPresent() && user.get().getPassword().equals(userDTO.getPassword())) {
                 session.setAttribute("user", user);
@@ -48,19 +48,17 @@ public class UserController {
                 }
                 response.addCookie(usernameCookie);
 
-                request.setAttribute("isLogin", true);
-
                 if (user.get().getRole()==true) {
                     return "forward:/admin/index";
                 } else {
                     return "forward:/product/show";
                 }
             } else {
-                request.setAttribute("error", "Invalid username or password!!");
+                model.addAttribute("error", "Invalid username or password!!");
                 return "forward:/user/login";
             }
         } catch (Exception e) {
-            request.setAttribute("error", e.getMessage());
+            model.addAttribute("error", e.getMessage());
             return "login";
         }
     }
@@ -90,7 +88,7 @@ public class UserController {
         }
 
         accountService.saveAccount(user);
-        return "redirect:/user/register";
+        return "redirect:/user/login";
     }
 
     // handler method to handle list of users
