@@ -2,6 +2,8 @@ package com.example.assm.controller;
 
 import com.example.assm.entity.Category;
 import com.example.assm.entity.Product;
+import com.example.assm.service.admin.CategoryService;
+import com.example.assm.service.admin.ICategoryService;
 import com.example.assm.service.admin.ProductServiceImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    @Autowired
+    ICategoryService categoryService;
     @Autowired
     ProductServiceImpl productService;
     @Autowired
@@ -46,7 +50,7 @@ public class AdminController {
     @ResponseBody
     public String saveProduct(@ModelAttribute("prod") Product product) {
         if (product != null) {
-            Category category = categoryService.findById(product.getCategory().getId());
+
             productService.saveProduct(product);
             response.setStatus(204);
         } else {
