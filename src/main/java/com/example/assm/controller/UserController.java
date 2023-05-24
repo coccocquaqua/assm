@@ -53,9 +53,9 @@ public class UserController {
                     response.addCookie(usernameCookie);
 
                     if (user.getRole()) {
-                        return "redirect:/admin/index";
+                        return "redirect:/index";
                     } else {
-                        return "redirect:/product/show";
+                        return "redirect:/index";
                     }
                 }
             }
@@ -94,7 +94,6 @@ public class UserController {
             model.addAttribute("user", user);
             return "register";
         }
-
         accountService.saveAccount(user);
         return "redirect:/user/login";
     }
@@ -105,6 +104,11 @@ public class UserController {
         List<User> users = accountService.getAllUser();
         model.addAttribute("users", users);
         return "list_account";
+    }
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate(); // Xóa session và hủy bỏ nó
+        return "redirect:/index";
     }
 
 

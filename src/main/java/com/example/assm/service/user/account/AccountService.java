@@ -30,6 +30,7 @@ public class AccountService implements IAccountService{
 
     @Override
     public void saveAccount(User user) {
+        user.setRole(false);
         repository.save(user);
     }
 }
