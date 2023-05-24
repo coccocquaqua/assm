@@ -46,11 +46,12 @@ public class ProductUserController {
     @GetMapping("/ShowOne/{IdProduct}")
     public String getOneProductDetail(@PathVariable(value = "IdProduct") int idProduct, Model model) {
         ProductDetail productDetail = productDetailService.GetProductById(idProduct);
+        System.out.println(productDetail.getName());
         if (productDetail == null) {
-            return "productNotFound";
+            return "shop";
         }
-        model.addAttribute("productId", productDetail);
-        return "";
+        model.addAttribute("prod", productDetail);
+        return "order";
     }
 /*@GetMapping("/{productId}")
 public ResponseEntity<ProductDetail> getProductDetailByProductId(@PathVariable int productId) {

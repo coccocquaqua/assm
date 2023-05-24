@@ -22,10 +22,10 @@ public class HomeController {
     public String showProd(){
         return "shop";
     }
-    @GetMapping("/order")
-    public String showOrder(){
-        return "order";
-    }
+//    @GetMapping("/order")
+//    public String showOrder(){
+//        return "order";
+//    }
     @GetMapping("/cart")
     public String showCart(){
         return "cart";
