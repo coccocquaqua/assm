@@ -22,4 +22,8 @@ public class AccountService implements IAccountService{
         Optional<User> user=repository.findById(id);
         return user;
     }
+    @Override
+    public void saveAccount(User user) {
+        repository.save(user);
+    }
 }

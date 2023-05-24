@@ -4,13 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.util.Objects;
+
 @Data
 public class ProductDetail {
     private int id;
     private String name;
     private float price;
     private String image;
-    private float Percentage;
+    public float Percentage;
 
     public ProductDetail() {
     }
@@ -63,10 +65,9 @@ public class ProductDetail {
     }
 
     public float getPercentage() {
-        return Percentage;
+
+       return Percentage;
     }
 
-    public void setPercentage(float percentage) {
-        Percentage = percentage;
-    }
+
 }

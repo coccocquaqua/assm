@@ -12,6 +12,7 @@ import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ProductDetailService implements IProductDetailService {
@@ -31,8 +32,11 @@ public class ProductDetailService implements IProductDetailService {
         List<ProductDetail> nonDiscountedProducts = new ArrayList<>();
         for (ProductDetail productDetail : productDetails) {
             if(productDetail.getPercentage()>0){
+                float calculatedPrice = productDetail.getPrice()-(productDetail.getPrice() *( productDetail.getPercentage()/100));
+                productDetail.setPrice(calculatedPrice);
                 discountedProducts.add(productDetail);
             }
+
             nonDiscountedProducts.add(productDetail);
         }
         discountedProducts.sort(Comparator.comparing(ProductDetail::getPrice).reversed());

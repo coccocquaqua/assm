@@ -3,17 +3,18 @@ package com.example.assm.controller;
 import com.example.assm.dto.UserDTO;
 import com.example.assm.entity.User;
 import com.example.assm.service.user.account.IAccountService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.HttpCookie;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,36 +24,40 @@ public class UserController {
     private final IAccountService accountService;
     @Autowired
     HttpSession session;
+    HttpCookie cookie;
     @Autowired
     public UserController(IAccountService accountService) {
         this.accountService = accountService;
     }
 
     @PostMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String login(HttpServletRequest request, HttpServletResponse response, Model model,@ModelAttribute UserDTO userDTO ) {
         try {
-            UserDTO loginForm = new UserDTO();
-            Optional<User> user = accountService.getUserById(loginForm.getUserId());
+            Optional<User> user = accountService.getUserById(userDTO.getUserId());
 
-            if (user.isPresent() && user.get().getPassword().equals(loginForm.getPassword())) {
+            if (user.isPresent() && user.get().getPassword().equals(userDTO.getPassword())) {
                 session.setAttribute("user", user);
 
-//                if (loginForm.isRemember()) {
-//                    Cookie.add("username", loginForm.getUserId(), 24, response);
-//                } else {
-//                    CookiesUtils.add("username", loginForm.getUserId(), 0, response);
-//                }
+                Cookie usernameCookie;
+                if (userDTO.isRemember()) {
+                    usernameCookie = new Cookie("username", String.valueOf(userDTO.getUserId()));
+                    usernameCookie.setMaxAge(24 * 60 * 60); // 24 hours in seconds
+                } else {
+                    usernameCookie = new Cookie("username", "");
+                    usernameCookie.setMaxAge(0); // Remove the cookie
+                }
+                response.addCookie(usernameCookie);
 
                 request.setAttribute("isLogin", true);
 
                 if (user.get().getRole()==true) {
-                    return "forward:/HomeAdmin";
+                    return "forward:/admin/index";
                 } else {
-                    return "forward:/Home";
+                    return "forward:/product/show";
                 }
             } else {
                 request.setAttribute("error", "Invalid username or password!!");
-                return "forward:/Login";
+                return "forward:/user/login";
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
@@ -60,16 +65,40 @@ public class UserController {
         }
     }
 
+
+
     @GetMapping("/register")
-    public String registerForm(Model model, @ModelAttribute User user) {
-        model.addAttribute("userForm", user); // UserForm là lớp đại diện cho thông tin đăng ký người dùng
+    public String showRegistrationForm(Model model){
+        User user = new User();
+        model.addAttribute("user", user);
         return "register";
     }
-    @GetMapping("/account")
-    public String getAll(Model model){
-        List<User> list=accountService.getAllUser();
-        model.addAttribute("listUser",list);
-       return "list_account";
+    @GetMapping("/login")
+    public String showLoginForm(Model model){
+        return "login";
+    }
+
+    // handler method to handle user registration form submit request
+    @PostMapping("/register/save")
+    public String registration(@Validated @ModelAttribute("user") User user,
+                               BindingResult result,
+                               Model model){
+
+        if(result.hasErrors()){
+            model.addAttribute("user", user);
+            return "register";
+        }
+
+        accountService.saveAccount(user);
+        return "redirect:/user/register";
+    }
+
+    // handler method to handle list of users
+    @GetMapping("/users")
+    public String users(Model model){
+        List<User> users = accountService.getAllUser();
+        model.addAttribute("users", users);
+        return "list_account";
     }
 
 
