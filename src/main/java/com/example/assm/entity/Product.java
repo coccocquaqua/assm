@@ -26,9 +26,9 @@ public class Product {
     private int quantity;
     @Column(name = "Image")
     private String image;
-//    @JoinColumn(name = "CategoryID")
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Category category;
+    @JoinColumn(name = "CategoryID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductDiscount> productDiscounts = new HashSet<>();
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)

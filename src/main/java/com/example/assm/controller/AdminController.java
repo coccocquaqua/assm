@@ -42,7 +42,7 @@ public class AdminController {
     //code cho user
     @GetMapping("/man_prod")
     public String addNew(@ModelAttribute("prod") Product product, Model model) {
-        model.addAttribute("product", product);
+        model.addAttribute("prod", product);
         return "edit_prod";
     }
 
@@ -65,17 +65,22 @@ public class AdminController {
         map.put(2, "Type-C");
         return map;
     }
-    @GetMapping("/update/{id}")
-    public String updateProduct(@PathVariable(value = "id") int id, Model model) {
+//    @GetMapping("/update")
+//    public String updateProduct(@PathVariable(value = "id") int id, Model model) {
+//        Product product = productService.getById(id);
+//        model.addAttribute("prod", product);
+//        return "forward:/man_prod";
+//    }
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable(value = "id") int id, Model model) {
         Product product = productService.getById(id);
-        model.addAttribute("product", product);
-        return "updateChucVu";
+        model.addAttribute("prod", product);
+        return "edit_prod";
     }
-
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable(value = "id") int id) {
         productService.deleteProduct(id);
-        return "redirect:/";
+        return "redirect:/admin/list_prod";
     }
 
 

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "CategoryRepository")
+@Table(name = "Category")
 public class Category {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)

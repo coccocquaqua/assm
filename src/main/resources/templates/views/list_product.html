@@ -320,8 +320,8 @@
                                         <td th:text="${p.image}"></td>
                                         <td th:text="${p.price}"></td>
                                         <td>
-                                            <a class="btn btn-outline-primary">Detail</a>
-                                            <a class="btn btn-outline-danger">Delete</a>
+                                            <a class="btn btn-outline-primary" th:href="@{/admin/detail/{id}(id=${p.id})}">Detail</a>
+                                            <a class="btn btn-outline-danger" th:href="@{/admin/delete/{id}(id=${p.id})}">Delete</a>
                                         </td>
                                     </tr>
                                     </tbody>

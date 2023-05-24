@@ -21,12 +21,13 @@ public interface ProductUserRepository extends JpaRepository<Product, Integer> {
     List<ProductDetail> getProductDetails();
 
     //xem chi tiết product
-    @Query("SELECT new com.example.assm.model.ProductDetail(p.id,p.name, p.price, p.image, d.percentage) " +
+    //bắt buộc phải có discount thì mới tìm ra sản phẩm
+    @Query("SELECT new com.example.assm.model.ProductDetail(p.id, p.name, p.price, p.image, d.percentage) " +
             "FROM Product p " +
             "JOIN p.productDiscounts pd " +
             "JOIN pd.discount d " +
-            "WHERE p.id = :productId")
-    ProductDetail getProductDetailsByProductId(@Param("productId") int productId);
+            "WHERE p.id = :IdProduct")
+    ProductDetail getProductDetailsByProductId(@Param("IdProduct") int IdProduct);
 
 //phân trang product
     @Query("SELECT new com.example.assm.model.ProductDetail(p.name, p.price, p.image, d.percentage) " +

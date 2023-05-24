@@ -31,10 +31,7 @@ public class HomeController {
         return "cart";
     }
 
-    @GetMapping("/list_prod")
-    public String showlistProd(){
-        return "list_product";
-    }
+
     @GetMapping("/man_acc")
     public String editAcc(){
         return "edit_account";

@@ -72,10 +72,11 @@ public ResponseEntity<ProductDetail> getProductDetailByProductId(@PathVariable i
     public String getProductByCategoryName(@PathVariable("name") String categoryName, Model model) {
         System.out.println(categoryName);
         List<ProductDetail> productDetailList = productDetailService.getProductByCategoryName(categoryName);
+        System.out.println(productDetailList.toString());
        if(productDetailList.isEmpty()){
            return "noContentView";
        }
         model.addAttribute("product", productDetailList);
-        return "forward:/show";
+        return "shop";
     }
 }

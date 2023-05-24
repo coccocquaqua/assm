@@ -284,7 +284,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Add/Edit Products</h1>
+                        <h1 class="m-0"th:text="${prod.name}">Add/Edit Products</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -319,6 +319,7 @@
                                     <input type="number" th:field="*{id}" id="id"
                                            class="form-control disabled">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="text" th:field="*{name}" id="name"
@@ -326,7 +327,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Price</label>
-                                    <input type="number" th:field="*{price}" id="price"
+                                    <input type="number"  th:field="*{price}" id="price"
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
@@ -477,7 +478,6 @@
             'category': $('#category').val(),
             'image': $('#image').val()
         };
-        console.log(nameOrigin)
         $.ajax({
             url: "/admin/saveProd",
             type: 'POST',
