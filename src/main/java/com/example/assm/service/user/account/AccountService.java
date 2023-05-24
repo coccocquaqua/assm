@@ -23,6 +23,12 @@ public class AccountService implements IAccountService{
         return user;
     }
     @Override
+    public Optional<User> findByName(String name){
+        Optional<User> user=repository.findByName(name);
+        return user;
+    }
+
+    @Override
     public void saveAccount(User user) {
         repository.save(user);
     }

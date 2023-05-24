@@ -31,39 +31,42 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response, Model model,@ModelAttribute UserDTO userDTO ) {
+    public String login(HttpServletResponse response, Model model, @Validated @ModelAttribute(name = "user") UserDTO userDTO) {
         try {
-            Optional<User> user = accountService.getUserById(userDTO.getUserId());
+            Optional<User> userOptional = accountService.findByName(userDTO.getUsername());
+            System.out.println(userOptional.get().getPassword());
+            System.out.println(userOptional.get().getName());
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                if (user.getPassword().equals(userDTO.getPassword())) {
+                    session.setAttribute("user", user);
 
-            if (user.isPresent() && user.get().getPassword().equals(userDTO.getPassword())) {
-                session.setAttribute("user", user);
+                    Cookie usernameCookie;
+                    if (userDTO.isRemember()) {
+                        usernameCookie = new Cookie("username", String.valueOf(user.getName()));
+                        usernameCookie.setMaxAge(24 * 60 * 60); // 24 hours in seconds
+                    } else {
+                        usernameCookie = new Cookie("username", "");
+                        usernameCookie.setMaxAge(0); // Remove the cookie
+                    }
+                    usernameCookie.setPath("/");
+                    response.addCookie(usernameCookie);
 
-                Cookie usernameCookie;
-                if (userDTO.isRemember()) {
-                    usernameCookie = new Cookie("username", String.valueOf(userDTO.getUserId()));
-                    usernameCookie.setMaxAge(24 * 60 * 60); // 24 hours in seconds
-                } else {
-                    usernameCookie = new Cookie("username", "");
-                    usernameCookie.setMaxAge(0); // Remove the cookie
+                    if (user.getRole()) {
+                        return "redirect:/admin/index";
+                    } else {
+                        return "redirect:/product/show";
+                    }
                 }
-                response.addCookie(usernameCookie);
-
-                request.setAttribute("isLogin", true);
-
-                if (user.get().getRole()==true) {
-                    return "forward:/admin/index";
-                } else {
-                    return "forward:/product/show";
-                }
-            } else {
-                request.setAttribute("error", "Invalid username or password!!");
-                return "forward:/user/login";
             }
+            model.addAttribute("error", "Invalid username or password!!");
+            return "login";
         } catch (Exception e) {
-            request.setAttribute("error", e.getMessage());
+            model.addAttribute("error", e.getMessage());
             return "login";
         }
     }
+
 
 
 
@@ -75,6 +78,9 @@ public class UserController {
     }
     @GetMapping("/login")
     public String showLoginForm(Model model){
+
+        User user = new User();
+        model.addAttribute("user", user);
         return "login";
     }
 
@@ -90,7 +96,7 @@ public class UserController {
         }
 
         accountService.saveAccount(user);
-        return "redirect:/user/register";
+        return "redirect:/user/login";
     }
 
     // handler method to handle list of users
