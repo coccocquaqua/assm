@@ -59,12 +59,10 @@ public ResponseEntity<ProductDetail> getProductDetailByProductId(@PathVariable i
 }*/
 
     @GetMapping("/page")
-    public String GetPageProductDetail(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "1") int pageSize,
-            Model model) {
-        ProductDetailPage productDetailPage =  productDetailService.getProductWithCondition(page, pageSize);
-        model.addAttribute("productDetailPage", productDetailPage);
+    public String getProducts(@RequestParam("page") int page, Model model) {
+        int pageSize = 1;
+        ProductDetailPage productPage = productDetailService.getProductWithCondition(page, pageSize);
+        model.addAttribute("productDetailPage", productPage);
         return "shop";
     }
 

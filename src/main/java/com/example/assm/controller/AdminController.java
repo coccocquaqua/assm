@@ -1,10 +1,13 @@
 package com.example.assm.controller;
 
 import com.example.assm.entity.Category;
+import com.example.assm.entity.Discount;
 import com.example.assm.entity.Product;
+import com.example.assm.entity.ProductDiscount;
 import com.example.assm.service.admin.CategoryService;
 import com.example.assm.service.admin.ICategoryService;
 import com.example.assm.service.admin.ProductServiceImpl;
+import com.example.assm.service.user.IProductDiscountService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,10 +51,13 @@ public class AdminController {
 
     @PostMapping("/saveProd")
     @ResponseBody
-    public String saveProduct(@ModelAttribute("prod") Product product) {
+    public String saveProduct(@ModelAttribute("prod") Product product,
+                              @ModelAttribute("productDiscount") ProductDiscount productDiscount,
+                              @ModelAttribute("Discount")Discount discount ) {
         if (product != null) {
 
-            productService.saveProduct(product);
+            productService.saveProduct(product,productDiscount,discount);
+
             response.setStatus(204);
         } else {
             response.setStatus(400);

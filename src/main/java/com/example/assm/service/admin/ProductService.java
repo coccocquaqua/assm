@@ -1,6 +1,10 @@
 package com.example.assm.service.admin;
 
+import com.example.assm.entity.Discount;
 import com.example.assm.entity.Product;
+import com.example.assm.entity.ProductDiscount;
+import com.example.assm.repository.DiscountRepository;
+import com.example.assm.repository.ProductDiscountRepository;
 import com.example.assm.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,15 +16,24 @@ import java.util.Optional;
 public class ProductService implements ProductServiceImpl {
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    ProductDiscountRepository productDiscountRepository;
 
+    @Autowired
+    DiscountRepository discountRepository;
     @Override
     public List<Product> getAll() {
         return productRepository.findAll();
     }
 
     @Override
-    public void saveProduct(Product product) {
+    public void saveProduct(Product product, ProductDiscount productDiscount, Discount discount) {
         productRepository.save(product);
+        productDiscount.setProduct(product);
+        discount.setId(1);
+        productDiscount.setDiscount(discount);
+        productDiscountRepository.save(productDiscount);
+
 
     }
 
