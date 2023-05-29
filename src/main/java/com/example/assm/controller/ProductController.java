@@ -18,9 +18,8 @@ import java.util.List;
 public class ProductController {
 
 
-
-
     IProductDetailService productDetailService;
+
     @Autowired
     public ProductController(IProductDetailService _productDetailService) {
         this.productDetailService = _productDetailService;
@@ -62,7 +61,8 @@ public ResponseEntity<ProductDetail> getProductDetailByProductId(@PathVariable i
     public String getProducts(@RequestParam("page") int page, Model model) {
         int pageSize = 1;
         ProductDetailPage productPage = productDetailService.getProductWithCondition(page, pageSize);
-        model.addAttribute("productDetailPage", productPage);
+        model.addAttribute("product", productPage);
+        System.out.println(productPage.toString());
         return "shop";
     }
 
@@ -71,9 +71,9 @@ public ResponseEntity<ProductDetail> getProductDetailByProductId(@PathVariable i
         System.out.println(categoryName);
         List<ProductDetail> productDetailList = productDetailService.getProductByCategoryName(categoryName);
         System.out.println(productDetailList.toString());
-       if(productDetailList.isEmpty()){
-           return "noContentView";
-       }
+        if (productDetailList.isEmpty()) {
+            return "noContentView";
+        }
         model.addAttribute("product", productDetailList);
         return "shop";
     }
