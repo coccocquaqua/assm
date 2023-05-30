@@ -8,6 +8,7 @@ import com.example.assm.repository.ProductDiscountRepository;
 import com.example.assm.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,9 +49,10 @@ public class ProductService implements ProductServiceImpl {
         }
         return product;
     }
-
+@Transactional
     @Override
     public void deleteProduct(int id) {
         productRepository.deleteById(id);
+       productDiscountRepository.deleteByProductId(id);
     }
 }
